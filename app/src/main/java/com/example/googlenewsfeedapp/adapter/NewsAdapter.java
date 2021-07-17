@@ -4,10 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,14 +23,11 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.example.googlenewsfeedapp.NewsDetailsActivity;
 import com.example.googlenewsfeedapp.R;
 import com.example.googlenewsfeedapp.Util;
 import com.example.googlenewsfeedapp.model.ArticleModelClass;
 
 import java.util.List;
-
-import butterknife.internal.Utils;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHolder> {
 
@@ -72,7 +69,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHol
             }
         }).transition(DrawableTransitionOptions.withCrossFade()).into(holder.newsImageView);
 
-        holder.authorTextView.setText(articleModelClass.getAuthor());
         holder.publishedAtTextView.setText(Util.DateFormat(articleModelClass.getPublishedAt()));
         holder.titleTextView.setText(articleModelClass.getTitle());
         holder.descriptionTextView.setText(articleModelClass.getDescription());
@@ -82,12 +78,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHol
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, NewsDetailsActivity.class);
-                intent.putExtra("Author Name",articleModelClass.getAuthor());
-                intent.putExtra("Published Date",Util.DateFormat(articleModelClass.getPublishedAt()));
-                intent.putExtra("News Title",articleModelClass.getTitle());
-                intent.putExtra("Content",articleModelClass.getContent());
-                intent.putExtra("Time",holder.timeTextView.getText().toString());
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(articleModelClass.getUrl()));
                 context.startActivity(intent);
             }
         });
@@ -101,13 +93,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHol
     public static class ArticleViewHolder extends RecyclerView.ViewHolder {
 
         ImageView newsImageView;
-        TextView authorTextView, publishedAtTextView, titleTextView, descriptionTextView, sourceTextView, timeTextView;
+        TextView publishedAtTextView, titleTextView, descriptionTextView, sourceTextView, timeTextView;
 
         public ArticleViewHolder(@NonNull View itemView) {
             super(itemView);
 
             newsImageView = itemView.findViewById(R.id.newsImageView);
-            authorTextView = itemView.findViewById(R.id.authorTextView);
             publishedAtTextView = itemView.findViewById(R.id.publishedAtTextView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
