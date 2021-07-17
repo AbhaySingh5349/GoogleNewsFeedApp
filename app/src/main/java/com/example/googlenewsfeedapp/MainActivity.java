@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.googlenewsfeedapp.adapter.CategoryAdapter;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
     // https://newsapi.org/v2/top-headlines?q=trump&apiKey=4a1effb7c4f04be98feeca6aa7917dd1 (Top headlines about Trump )
     // https://newsapi.org/v2/top-headlines?country=us&category=science&apiKey=4a1effb7c4f04be98feeca6aa7917dd1 (science news from USA)
 
+    @BindView(R.id.categoryTitleTextView)
+    TextView categoryTitleTextView;
     @BindView(R.id.newsRecyclerView)
     RecyclerView newsRecyclerView;
     @BindView(R.id.categoriesRecyclerView)
@@ -73,9 +77,21 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
 
         categoryModelClassList = new ArrayList<>();
         categoryAdapter = new CategoryAdapter(MainActivity.this,categoryModelClassList,this::onCategoryClicked);
-        categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         categoriesRecyclerView.setAdapter(categoryAdapter);
         getCategories();
+
+    /*    Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                worldStatsPieChart.startAnimation();
+                worldStatsArcLoader.stop();
+                worldStatsArcLoader.setVisibility(View.GONE);
+                worldStatsCardView.setVisibility(View.VISIBLE);
+                cardViewConstraintLayout.setVisibility(View.VISIBLE);
+            }
+        };
+        handler.postDelayed(runnable,1000); */
 
         getNews("Top Headlines");
         newsAdapter.notifyDataSetChanged();
@@ -114,8 +130,8 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
                 NewsModelClass newsModel = response.body();
                 arcLoader.setVisibility(View.GONE);
 
-                if(response.isSuccessful() && Objects.requireNonNull(response.body()).getArticleModelClassList()!=null){
-                    List<ArticleModelClass> articleModelList = Objects.requireNonNull(newsModel).getArticleModelClassList();
+                if(response.isSuccessful() && Objects.requireNonNull(response.body()).getArticles()!=null){
+                    List<ArticleModelClass> articleModelList = Objects.requireNonNull(newsModel).getArticles();
                     for(int i=0;i<articleModelList.size();i++){
                         String author=articleModelList.get(i).getAuthor();
                         String title=articleModelList.get(i).getTitle();
@@ -144,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.C
     @Override
     public void onCategoryClicked(int position) {
         String category=categoryModelClassList.get(position).getCategoryName();
+        categoryTitleTextView.setText(category);
         getNews(category);
     }
 }

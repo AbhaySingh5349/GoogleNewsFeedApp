@@ -54,7 +54,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHol
     public void onBindViewHolder(@NonNull ArticleViewHolder holder, int position) {
         ArticleModelClass articleModelClass = articleModelClassList.get(position);
 
-    /*    RequestOptions requestOptions = new RequestOptions();
+        RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(Util.getRandomDrawbleColor());
         requestOptions.error(Util.getRandomDrawbleColor());
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -70,13 +70,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleViewHol
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                 return false;
             }
-        }).transition(DrawableTransitionOptions.withCrossFade()).into(holder.newsImageView); */
+        }).transition(DrawableTransitionOptions.withCrossFade()).into(holder.newsImageView);
 
         holder.authorTextView.setText(articleModelClass.getAuthor());
         holder.publishedAtTextView.setText(Util.DateFormat(articleModelClass.getPublishedAt()));
         holder.titleTextView.setText(articleModelClass.getTitle());
         holder.descriptionTextView.setText(articleModelClass.getDescription());
-        holder.sourceTextView.setText(articleModelClass.getSource().getClass().getName());
+        holder.sourceTextView.setText(articleModelClass.getSource().getName());
         holder.timeTextView.setText(" \u2022 " + Util.DateToTimeFormat(articleModelClass.getPublishedAt()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

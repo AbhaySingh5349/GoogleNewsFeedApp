@@ -10,7 +10,7 @@ public class NewsModelClass {
 
     private String status;
     private int totalResults;
-    private List<ArticleModelClass> articleModelClassList;
+    private List<ArticleModelClass> articles;
 
     public String getStatus() {
         return status;
@@ -28,52 +28,17 @@ public class NewsModelClass {
         this.totalResults = totalResults;
     }
 
-    public List<ArticleModelClass> getArticleModelClassList() {
-        return articleModelClassList;
+    public List<ArticleModelClass> getArticles() {
+        return articles;
     }
 
-    public void setArticleModelClassList(List<ArticleModelClass> articleModelClassList) {
-        this.articleModelClassList = articleModelClassList;
+    public void setArticles(List<ArticleModelClass> articles) {
+        this.articles = articles;
     }
 
-    public NewsModelClass(String status, int totalResults, List<ArticleModelClass> articleModelClassList) {
+    public NewsModelClass(String status, int totalResults, List<ArticleModelClass> articles) {
         this.status = status;
         this.totalResults = totalResults;
-        this.articleModelClassList = articleModelClassList;
+        this.articles = articles;
     }
-/*  @SerializedName("status")
-    @Expose
-    private String status;
-
-    @SerializedName("totalResults")
-    @Expose
-    private int totalResults;
-
-    @SerializedName("articles")
-    @Expose
-    private List<ArticleModelClass> articleModelClassList;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public int getTotalResult() {
-        return totalResults;
-    }
-
-    public void setTotalResult(int totalResult) {
-        this.totalResults = totalResults;
-    }
-
-    public List<ArticleModelClass> getArticleModelClassList() {
-        return articleModelClassList;
-    }
-
-    public void setArticleModelClassList(List<ArticleModelClass> articleModelClassList) {
-        this.articleModelClassList = articleModelClassList;
-    } */
 }
